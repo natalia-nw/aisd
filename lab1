@@ -1,0 +1,57 @@
+# zad1
+def zad1(litera, nazwisko):
+    print(litera + '.' + nazwisko)
+
+zad1('J','Kowalski')
+
+# zad2
+def zad2(imie, nazwisko):
+    print(imie[0].capitalize() + '.' + nazwisko.capitalize())
+
+zad2('jan','kowalski')
+
+# zad3
+def zad3(pierwsze:int, ostatnie:int, wiek:int):
+    print(pierwsze*100+ostatnie-wiek)
+
+zad3(20,21,20)
+
+# zad4
+def zad4(imie, nazwisko, funkcja):
+    return funkcja(imie,nazwisko)
+
+zad4('jan','kowalski',zad2)
+
+# zad5
+def zad5(a:int, b:int):
+    if a > 0 and b > 0:
+        print(a/b)
+
+zad5(9,2)
+zad5(-1,0)
+
+# zad6
+s = 0
+while(s < 100):
+    liczba = input('wpisz liczbe: ')
+    liczba = int(liczba)
+    s += liczba
+    print(s)
+
+
+# zad9
+def zad9(a:int):
+    dni = ['poniedzialek', 'wtorek', 'sroda', 'czwartek', 'piatek', 'sobota', 'niedziela']
+    print(dni[a-1])
+
+zad9(4)
+
+# zad10
+def zad10(tekst):
+    for i in range(1,len(tekst)+1):
+        if tekst[i-1] != tekst[len(tekst)-i]:
+            return False
+    return True
+
+print(zad10('aha'))
+print(zad10('ach'))
