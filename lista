@@ -1,0 +1,119 @@
+from typing import Any
+
+
+class Node:
+    value: Any
+    next: 'Node'
+
+
+class LinkedList:
+    head: Node
+    tail: Node
+
+    def __init__(self) -> None:
+        self.head = None
+        self.tail = None
+
+    def push(self, value: Any) -> None:
+        nowy = Node()
+        if self.tail == None:
+            self.tail = nowy
+        nowy.next = self.head
+        nowy.value = value
+        self.head = nowy
+
+    def append(self, value: Any) -> None:
+        nowy = Node()
+        if self.head == None:
+            self.head = nowy
+            self.tail = nowy
+            nowy.value = value
+            return
+        self.tail.next=nowy
+        nowy.value = value
+        nowy.next = None
+        self.tail = nowy
+
+    def node(self, at: int) -> Node:
+        i = 0
+        nowy = self.head
+        while True:
+            if i == at:
+                return nowy
+            i += 1
+            nowy = nowy.next
+
+    def insert(self, value: Any, after: Node) -> None:
+        nowy = Node()
+        nowy.next = after.next
+        after.next = nowy
+        nowy.value = value
+
+    def pop(self) -> Any:
+        nowy = self.head.value
+        self.head = self.head.next
+        return nowy
+
+    def remove_last(self) -> Any:
+        nowy = self.head
+        while nowy.next != self.tail:
+            nowy = nowy.next
+        zwrot = self.tail.value
+        nowy.next = None
+        self.tail = nowy
+        return zwrot
+
+    def remove(self, after: Node) -> Any:
+        nowy = after.next
+        after.next = nowy.next
+        return nowy.value
+
+    def __str__(self) -> str:
+        nowy = self.head
+        if nowy == None:
+            return ''
+        napisz = str(nowy.value)
+        nowy = nowy.next
+        while nowy != None:
+            napisz = napisz + ' -> ' + str(nowy.value)
+            nowy = nowy.next
+        return napisz
+
+    def __len__(self) -> int:
+        nowy = self.head
+        licznik = 0
+        while True:
+            if nowy == None:
+                return licznik
+            licznik += 1
+            nowy = nowy.next
+
+
+list_ = LinkedList()
+
+assert list_.head == None
+
+list_.push(1)
+list_.push(0)
+assert str(list_) == '0 -> 1'
+
+list_.append(9)
+list_.append(10)
+assert str(list_) == '0 -> 1 -> 9 -> 10'
+
+middle_node = list_.node(at=1)
+list_.insert(5, after=middle_node)
+assert str(list_) == '0 -> 1 -> 5 -> 9 -> 10'
+
+first_element = list_.node(at=0)
+returned_first_element = list_.pop()
+assert first_element.value == returned_first_element
+
+last_element = list_.node(at=3)
+returned_last_element = list_.remove_last()
+assert last_element.value == returned_last_element
+assert str(list_) == '1 -> 5 -> 9'
+
+second_node = list_.node(at=1)
+list_.remove(second_node)
+assert str(list_) == '1 -> 5'
