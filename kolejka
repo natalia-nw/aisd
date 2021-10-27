@@ -1,0 +1,71 @@
+from typing import Any
+
+
+class LinkedList:
+    value: Any
+    next: 'Node'
+
+
+class Queue:
+    _storage: LinkedList
+
+    def __init__(self) -> None:
+        self._storage = None
+
+    def peek(self) -> Any:
+        nowy = self._storage
+        while nowy.next != None:
+            nowy = nowy.next
+        return nowy.value
+
+    def enqueue(self, element: Any) -> None:
+        nowy = LinkedList()
+        nowy.next = self._storage
+        nowy.value = element
+        self._storage = nowy
+
+    def dequeue(self) -> Any:
+        nowy = self._storage
+        nowy2 = self._storage
+        while nowy.next != None:
+            nowy = nowy.next
+        while nowy2.next != nowy:
+            nowy2 = nowy2.next
+        nowy2.next = None
+        return nowy.value
+
+    def __str__(self) -> str:
+        nowy = self._storage
+        stos = ''
+        if nowy == None:
+            return stos
+        stos = str(nowy.value)
+        nowy = nowy.next
+        while nowy != None:
+            stos = str(nowy.value) + ', ' + stos
+            nowy = nowy.next
+        return stos
+
+    def __len__(self) -> int:
+        nowy = self._storage
+        licznik = 0
+        while True:
+            if nowy == None:
+                return licznik
+            nowy = nowy.next
+            licznik += 1
+
+
+queue = Queue()
+
+assert len(queue) == 0
+
+queue.enqueue('klient1')
+queue.enqueue('klient2')
+queue.enqueue('klient3')
+assert str(queue) == 'klient1, klient2, klient3'
+
+client_first = queue.dequeue()
+assert client_first == 'klient1'
+assert str(queue) == 'klient2, klient3'
+assert len(queue) == 2
